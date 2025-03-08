@@ -29,16 +29,13 @@ def task_var_1(matrix):
 
 def check_number(matrix, number, numbers_set):
     counter = 0
-    if number not in numbers_set:
-        for i in range(len(matrix)):
-            for j in range(len(matrix[0])):
-                if matrix[i][j] == number:
-                    counter = counter + 1
-            if counter > 1:
-                numbers_set.add(number)
-                return
-    else:
-        return
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == number:
+                counter = counter + 1
+        if counter > 1:
+            numbers_set.add(number)
+            return
 
 if __name__ == '__main__':
     task_var_1(matrix)
