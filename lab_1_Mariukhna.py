@@ -33,11 +33,11 @@ def find_matrix_max_num(m):
 
 
 def start_var_1(m):
-    count_matrix_row = count_no_zero_rows(matrix)
+    count_matrix_row = count_no_zero_rows(m)
     print(f"Number of rows that do not contain zeros = {count_matrix_row}")
 
     "second task"
-    numbers_set = find_matrix_max_num(matrix)
+    numbers_set = find_matrix_max_num(m)
 
     if numbers_set:
         print(f'The maximum number that occurs more than once: {max(numbers_set)}')
@@ -160,9 +160,10 @@ def print_matrix(m):
     for i in m:
         print(i, end='\n')
 
+
 if __name__ == '__main__':
     fill_matrix(matrix)
     print_matrix(matrix)
-    #start_var_1(matrix)
+    start_var_1(matrix)
     start_var_2(matrix)
-    #start_var_3(matrix)
+    start_var_3(matrix)
