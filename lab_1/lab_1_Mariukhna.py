@@ -2,8 +2,8 @@ import random
 
 matrix = []
 
-MATRIX_MIN = -20
-MATRIX_MAX = 100
+MATRIX_MIN_NUM = -20
+MATRIX_MAX_NUM = 100
 
 MATRIX_HEIGHT = 4
 MATRIX_WIDTH = 3
@@ -19,6 +19,17 @@ def count_no_zero_rows(m):
                 break
 
     return count_matrix_row
+
+
+def check_number(m, number, numbers_set):
+    counter = 0
+    for i in range(MATRIX_HEIGHT):
+        for j in range(MATRIX_WIDTH):
+            if m[i][j] == number:
+                counter = counter + 1
+        if counter > 1:
+            numbers_set.add(number)
+            return
 
 
 def find_matrix_max_num(m):
@@ -45,17 +56,6 @@ def start_var_1(m):
         print('No repeating numbers')
 
 
-def check_number(m, number, numbers_set):
-    counter = 0
-    for i in range(MATRIX_HEIGHT):
-        for j in range(MATRIX_WIDTH):
-            if m[i][j] == number:
-                counter = counter + 1
-        if counter > 1:
-            numbers_set.add(number)
-            return
-
-
 def count_no_zero_cols(m):
     count_matrix_cols = MATRIX_WIDTH
 
@@ -66,6 +66,14 @@ def count_no_zero_cols(m):
                 break
 
     return count_matrix_cols
+
+
+def swap_matrix_row(m, characteristic):
+    for i in range(len(characteristic)):
+        for j in range(len(characteristic) - 1 - i):
+            if characteristic[j] > characteristic[j + 1]:
+                characteristic[j + 1], characteristic[j] = characteristic[j], characteristic[j + 1]
+                m[j + 1], m[j] = m[j], m[j + 1]
 
 
 def find_matrix_characteristic(m):
@@ -91,14 +99,6 @@ def start_var_2(m):
 
     print('Sorted matrix by characteristic')
     print_matrix(characteristic)
-
-
-def swap_matrix_row(m, characteristic):
-    for i in range(len(characteristic)):
-        for j in range(len(characteristic) - 1 - i):
-            if characteristic[j] > characteristic[j + 1]:
-                characteristic[j + 1], characteristic[j] = characteristic[j], characteristic[j + 1]
-                m[j + 1], m[j] = m[j], m[j + 1]
 
 
 def count_cols(m):
@@ -151,7 +151,7 @@ def fill_matrix(m):
     for i in range(MATRIX_HEIGHT):
         row_matrix = []
         for j in range(MATRIX_WIDTH):
-            row_matrix.append(random.randint(MATRIX_MIN, MATRIX_MAX))
+            row_matrix.append(random.randint(MATRIX_MIN_NUM, MATRIX_MAX_NUM))
 
         m.append(row_matrix)
 
