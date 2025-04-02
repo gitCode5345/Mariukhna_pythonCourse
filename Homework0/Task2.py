@@ -1,77 +1,45 @@
-import random
-
-matrix = []
-
-MATRIX_MIN_NUM = -20
-MATRIX_MAX_NUM = 100
-
-MATRIX_HEIGHT = 4
-MATRIX_WIDTH = 3
+from consts import MATRIX_HEIGHT, MATRIX_WIDTH
+from matrix_utils import fill_matrix, output_matrix
 
 
-def main():
-    fill_matrix(matrix)
-    print_matrix(matrix)
-    start_var_2(matrix)
-
-
-def fill_matrix(m):
-    for i in range(MATRIX_HEIGHT):
-        row_matrix = []
-        for j in range(MATRIX_WIDTH):
-            row_matrix.append(random.randint(MATRIX_MIN_NUM, MATRIX_MAX_NUM))
-
-        m.append(row_matrix)
-
-
-def print_matrix(m):
-    for i in m:
-        print(i, end='\n')
-
-
-def start_var_2(m):
-    count_matrix_cols = count_no_zero_cols(m)
-    print(f"Number of cols that do not contain zeros = {count_matrix_cols}")
-
-    characteristic = find_matrix_characteristic(m)
-
-    print('Sorted matrix by characteristic')
-    print_matrix(characteristic)
-
-
-def count_no_zero_cols(m):
-    count_matrix_cols = MATRIX_WIDTH
-
+def count_no_zero_cols(matrix):
+    counter = 0
     for i in range(MATRIX_WIDTH):
-        for j in range(MATRIX_HEIGHT):
-            if m[j][i] == 0:
-                count_matrix_cols = count_matrix_cols - 1
-                break
+        if any(matrix[j][i] != 0 for j in range(MATRIX_HEIGHT)):
+            counter += 1
 
-    return count_matrix_cols
+    return counter
 
 
-def find_matrix_characteristic(m):
+def find_matrix_characteristic(matrix):
     matrix_characteristic = []
 
     for i in range(MATRIX_HEIGHT):
         counter_sum = 0
         for j in range(MATRIX_WIDTH):
-            if m[i][j] > 0 and m[i][j] % 2 == 0:
-                counter_sum += m[i][j]
-        matrix_characteristic.append(counter_sum)
+            if matrix[i][j] > 0 and matrix[i][j] % 2 == 0:
+                counter_sum += matrix[i][j]
+        matrix_characteristic.append((counter_sum, i))
 
-    swap_matrix_row(m, matrix_characteristic)
+    matrix_characteristic.sort()
+    sorted_matrix = [matrix[i] for _, i in matrix_characteristic]
 
-    return m
+    return sorted_matrix
 
 
-def swap_matrix_row(m, characteristic):
-    for i in range(len(characteristic)):
-        for j in range(len(characteristic) - 1 - i):
-            if characteristic[j] > characteristic[j + 1]:
-                characteristic[j + 1], characteristic[j] = characteristic[j], characteristic[j + 1]
-                m[j + 1], m[j] = m[j], m[j + 1]
+def main():
+    matrix = []
+
+    fill_matrix(matrix)
+    output_matrix(matrix)
+
+    count_matrix_cols = count_no_zero_cols(matrix)
+    print(f"Number of cols that do not contain zeros = {count_matrix_cols}")
+
+    characteristic = find_matrix_characteristic(matrix)
+
+    print('Sorted matrix by characteristic')
+    output_matrix(characteristic)
 
 
 if __name__ == '__main__':

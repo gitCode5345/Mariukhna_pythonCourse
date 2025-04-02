@@ -1,79 +1,41 @@
-import random
+from consts import MATRIX_HEIGHT, MATRIX_WIDTH
+from matrix_utils import fill_matrix, output_matrix
 
-matrix = []
 
-MATRIX_MIN_NUM = -20
-MATRIX_MAX_NUM = 100
+def count_no_zero_rows(matrix):
+    counter_rows = 0
+    counter_rows += sum(1 for row in matrix if 0 not in row)
 
-MATRIX_HEIGHT = 4
-MATRIX_WIDTH = 3
+    return counter_rows
+
+
+def find_matrix_max_num(matrix):
+    dict_nums = {}
+    for i in range(MATRIX_HEIGHT):
+        for j in range(MATRIX_WIDTH):
+            if matrix[i][j] not in dict_nums:
+                dict_nums[matrix[i][j]] = 1
+            else:
+                dict_nums[matrix[i][j]] += 1
+
+    max_key, value_key = max(dict_nums.items(), key=lambda x: x[1])
+
+    return max_key, value_key
 
 
 def main():
+    matrix = []
+
     fill_matrix(matrix)
-    print_matrix(matrix)
-    start_var_1(matrix)
+    output_matrix(matrix)
 
-
-def fill_matrix(m):
-    for i in range(MATRIX_HEIGHT):
-        row_matrix = []
-        for j in range(MATRIX_WIDTH):
-            row_matrix.append(random.randint(MATRIX_MIN_NUM, MATRIX_MAX_NUM))
-
-        m.append(row_matrix)
-
-
-def print_matrix(m):
-    for i in m:
-        print(i, end='\n')
-
-
-def start_var_1(m):
-    count_matrix_row = count_no_zero_rows(m)
+    count_matrix_row = count_no_zero_rows(matrix)
     print(f"Number of rows that do not contain zeros = {count_matrix_row}")
 
-    "second task"
-    numbers_set = find_matrix_max_num(m)
-
-    if numbers_set:
-        print(f'The maximum number that occurs more than once: {max(numbers_set)}')
-    else:
-        print('No repeating numbers')
-
-
-def count_no_zero_rows(m):
-    count_matrix_row = MATRIX_HEIGHT
-
-    for i in range(MATRIX_HEIGHT):
-        for j in range(MATRIX_WIDTH):
-            if m[i][j] == 0:
-                count_matrix_row = count_matrix_row - 1
-                break
-
-    return count_matrix_row
-
-
-def find_matrix_max_num(m):
-    numbers_set = set()
-
-    for i in range(MATRIX_HEIGHT):
-        for j in range(MATRIX_WIDTH):
-            if m[i][j] not in numbers_set:
-                check_number(m, m[i][j], numbers_set)
-
-    return numbers_set
-
-
-def check_number(m, number, numbers_set):
-    counter = 0
-    for i in range(MATRIX_HEIGHT):
-        for j in range(MATRIX_WIDTH):
-            if m[i][j] == number:
-                counter = counter + 1
-        if counter > 1:
-            numbers_set.add(number)
-            return
+    max_key, max_value_key = find_matrix_max_num(matrix)
+    print(f'The maximum number that occurs more than once: {max_key}, value {max_value_key}') \
+        if max_key and max_value_key > 1 \
+        else print('No repeating numbers')
 
 
 if __name__ == '__main__':
