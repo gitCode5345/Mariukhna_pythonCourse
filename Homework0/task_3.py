@@ -26,14 +26,14 @@ def main():
 
     if matrix:
         counter_cols_with_zero_element = check_columns_for_zeros(matrix)
-        print(f"Number of columns that have at least one zero element: {counter_cols_with_zero_element.count(True)}")
+        print(f'Number of columns that have at least one zero element: {counter_cols_with_zero_element.count(True)}')
 
         longest_series_index_row = find_longest_series_index_row(matrix)
 
-        if longest_series_index_row != -1:
-            print(f"The row index with the longest series of elements: {longest_series_index_row}")
-        else:
-            print('Failed to find longest series of identical elements')
+        answer = f'The row index with the longest series of elements: {longest_series_index_row}' \
+                 if longest_series_index_row != -1 else 'Failed to find longest series of identical elements'
+
+        print(answer)
     else:
         print('Please, fill your matrix')
 

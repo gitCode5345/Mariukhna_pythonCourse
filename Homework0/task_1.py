@@ -27,11 +27,11 @@ def main():
         print(f'Number of rows that do not contain zeros = {counter_rows_without_zero_element}')
 
         value_max_element, count_max_element = find_max_repeated_element(matrix)
-        x = (f'The maximum number that occurs more than once. Number: {value_max_element}, '
-             f'number of repetitions: {count_max_element}') \
+        answer = (f'The maximum number that occurs more than once. Number: {value_max_element}, '
+                  f'number of repetitions: {count_max_element}') \
             if count_max_element > 1 else 'No repeating numbers'
 
-        print(x)
+        print(answer)
     else:
         print('Please, fill your matrix')
 
