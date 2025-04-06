@@ -11,11 +11,8 @@ def fill_matrix():
 
 
 def print_matrix(matrix):
-    if matrix:
-        for row in matrix:
-            print(row)
-    else:
-        print('Please, fill your matrix')
+    matrix_elements = [row for row in matrix] if matrix else 'Please, fill your matrix'
+    print(matrix_elements)
 
 
 def check_columns_for_zeros(matrix):
