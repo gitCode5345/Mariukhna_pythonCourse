@@ -1,41 +1,39 @@
 from consts import MATRIX_HEIGHT, MATRIX_WIDTH
-from matrix_utils import fill_matrix, output_matrix
+from matrix_utils import fill_matrix, print_matrix
+from collections import defaultdict
 
 
-def count_no_zero_rows(matrix):
-    counter_rows = 0
-    counter_rows += sum(1 for row in matrix if 0 not in row)
-
-    return counter_rows
+def count_matrix_rows_without_zero(matrix):
+    return sum(1 for row in matrix if 0 not in row)
 
 
-def find_matrix_max_num(matrix):
-    dict_nums = {}
+def find_max_repeated_element(matrix):
+    dict_nums = defaultdict(int)
     for i in range(MATRIX_HEIGHT):
         for j in range(MATRIX_WIDTH):
-            if matrix[i][j] not in dict_nums:
-                dict_nums[matrix[i][j]] = 1
-            else:
-                dict_nums[matrix[i][j]] += 1
+            dict_nums[matrix[i][j]] += 1
 
-    max_key, value_key = max(dict_nums.items(), key=lambda x: x[1])
+    value_max_element, count_max_element = max(dict_nums.items(), key=lambda x: x[1])
 
-    return max_key, value_key
+    return value_max_element, count_max_element
 
 
 def main():
-    matrix = []
+    matrix = fill_matrix()
+    print_matrix(matrix)
 
-    fill_matrix(matrix)
-    output_matrix(matrix)
+    if matrix:
+        counter_rows_without_zero_element = count_matrix_rows_without_zero(matrix)
+        print(f'Number of rows that do not contain zeros = {counter_rows_without_zero_element}')
 
-    count_matrix_row = count_no_zero_rows(matrix)
-    print(f"Number of rows that do not contain zeros = {count_matrix_row}")
+        value_max_element, count_max_element = find_max_repeated_element(matrix)
+        x = (f'The maximum number that occurs more than once. Number: {value_max_element}, '
+             f'number of repetitions: {count_max_element}') \
+            if count_max_element > 1 else 'No repeating numbers'
 
-    max_key, max_value_key = find_matrix_max_num(matrix)
-    print(f'The maximum number that occurs more than once: {max_key}, value {max_value_key}') \
-        if max_key and max_value_key > 1 \
-        else print('No repeating numbers')
+        print(x)
+    else:
+        print('Please, fill your matrix')
 
 
 if __name__ == '__main__':

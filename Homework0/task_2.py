@@ -1,45 +1,35 @@
 from consts import MATRIX_HEIGHT, MATRIX_WIDTH
-from matrix_utils import fill_matrix, output_matrix
+from matrix_utils import fill_matrix, print_matrix, check_columns_for_zeros
+from collections import defaultdict
 
 
-def count_no_zero_cols(matrix):
-    counter = 0
-    for i in range(MATRIX_WIDTH):
-        if any(matrix[j][i] != 0 for j in range(MATRIX_HEIGHT)):
-            counter += 1
-
-    return counter
-
-
-def find_matrix_characteristic(matrix):
-    matrix_characteristic = []
+def sort_rows_by_even_positive_sum(matrix):
+    dict_matrix_characteristic = defaultdict(int)
 
     for i in range(MATRIX_HEIGHT):
         counter_sum = 0
         for j in range(MATRIX_WIDTH):
             if matrix[i][j] > 0 and matrix[i][j] % 2 == 0:
                 counter_sum += matrix[i][j]
-        matrix_characteristic.append((counter_sum, i))
+        dict_matrix_characteristic[i] = counter_sum
 
-    matrix_characteristic.sort()
-    sorted_matrix = [matrix[i] for _, i in matrix_characteristic]
-
-    return sorted_matrix
+    return [matrix[i] for i, _ in sorted(dict_matrix_characteristic.items(), key=lambda x: x[1])]
 
 
 def main():
-    matrix = []
+    matrix = fill_matrix()
+    print_matrix(matrix)
 
-    fill_matrix(matrix)
-    output_matrix(matrix)
+    if matrix:
+        counter_cols_without_zero_element = check_columns_for_zeros(matrix)
+        print(f'Number of cols that do not contain zeros = {counter_cols_without_zero_element.count(False)}')
 
-    count_matrix_cols = count_no_zero_cols(matrix)
-    print(f"Number of cols that do not contain zeros = {count_matrix_cols}")
+        sorted_matrix_by_characteristic = sort_rows_by_even_positive_sum(matrix)
 
-    characteristic = find_matrix_characteristic(matrix)
-
-    print('Sorted matrix by characteristic')
-    output_matrix(characteristic)
+        print('Sorted matrix by characteristic')
+        print_matrix(sorted_matrix_by_characteristic)
+    else:
+        print('Please, fill your matrix')
 
 
 if __name__ == '__main__':
