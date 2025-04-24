@@ -5,7 +5,7 @@ import sys
 import requests
 import shutil
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from collections import defaultdict, Counter
 from pathlib import Path
 
@@ -32,7 +32,7 @@ def parse_args():
 
 
 def download_csv(destination: str, filename: str):
-    url = 'https://randomuser.me/api/?results=1000&format=csv'
+    url = 'https://randomuser.me/api/?results=100&format=csv'
     logging.info(f'Downloading CSV data from {url}')
     response = requests.get(url)
     if response.status_code == 200:
@@ -55,8 +55,21 @@ def preprocess_data(file_path, gender=None, rows=None):
         for i, row in enumerate(reader, start=1):
             if gender and row['gender'] != gender:
                 continue
+
             row['global_index'] = str(i)
-            row['current_time'] = datetime.now().isoformat()
+            offset_str = row.get('location.timezone.offset', '+00:00')
+
+            try:
+                sign = 1 if offset_str[0] == '+' else -1
+                hours_offset = int(offset_str[1:3])
+                minutes_offset = int(offset_str[4:6])
+                tz = timezone(sign * timedelta(hours=hours_offset, minutes=minutes_offset))
+                user_time = datetime.now(tz).isoformat()
+            except Exception as e:
+                logging.warning(f'Failed to parse timezone {offset_str}, defaulting to UTC: {e}')
+                user_time = datetime.now(timezone.utc).isoformat()
+
+            row['current_time'] = user_time
 
             title = row['name.title']
             row['name.title'] = title_map.get(title, title)
@@ -90,7 +103,7 @@ def preprocess_data(file_path, gender=None, rows=None):
 
 
 def group_users(data):
-    grouped = defaultdict(list)
+    grouped = defaultdict(lambda: defaultdict(list))
     for row in data:
         dob = datetime.strptime(row['dob.date'], '%m/%d/%Y')
         decade = f'{dob.year // 10 * 10}-th'
