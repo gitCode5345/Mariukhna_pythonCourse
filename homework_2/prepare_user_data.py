@@ -1,49 +1,9 @@
-import argparse
 import logging
-import os
-import sys
-import requests
 import shutil
 import csv
 from datetime import datetime, timedelta, timezone
 from collections import defaultdict, Counter
 from pathlib import Path
-
-
-def setup_logger(log_level='INFO'):
-    logging.basicConfig(
-        level=getattr(logging, log_level.upper(), logging.INFO),
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler('homework_2/script.log'),
-            logging.StreamHandler(sys.stdout)
-        ]
-    )
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('destination', help='Destination folder')
-    parser.add_argument('--filename', default='output', help='Output filename (default: output)')
-    parser.add_argument('--gender', help='Filter by gender')
-    parser.add_argument('--rows', type=int, help='Limit number of rows')
-    parser.add_argument('log_level', nargs='?', default='INFO', help='Logging level')
-    return parser.parse_args()
-
-
-def download_csv(destination: str, filename: str):
-    url = 'https://randomuser.me/api/?results=100&format=csv'
-    logging.info(f'Downloading CSV data from {url}')
-    response = requests.get(url)
-    if response.status_code == 200:
-        file_path = os.path.join(destination, filename + '.csv')
-        with open(file_path, 'wb') as f:
-            f.write(response.content)
-        logging.info(f'Data saved to {file_path}')
-        return file_path
-    else:
-        logging.error('Failed to download data')
-        sys.exit(1)
 
 
 def preprocess_data(file_path, gender=None, rows=None):
@@ -60,9 +20,10 @@ def preprocess_data(file_path, gender=None, rows=None):
             offset_str = row.get('location.timezone.offset', '+00:00')
 
             try:
-                sign = 1 if offset_str[0] == '+' else -1
-                hours_offset = int(offset_str[1:3])
-                minutes_offset = int(offset_str[4:6])
+                sign = 1 if offset_str.startswith('+') else -1
+                offset_parts = offset_str[1:].split(':')
+                hours_offset = int(offset_parts[0])
+                minutes_offset = int(offset_parts[1]) if len(offset_parts) > 1 else 0
                 tz = timezone(sign * timedelta(hours=hours_offset, minutes=minutes_offset))
                 user_time = datetime.now(tz).isoformat()
             except Exception as e:
@@ -152,23 +113,3 @@ def log_folder_structure(path: Path, level=0):
 def archive_folder(folder_path, name_zip):
     archive_name = shutil.make_archive(name_zip, 'zip', folder_path)
     logging.info(f'Folder archived: {archive_name}')
-
-
-def main():
-    args = parse_args()
-    setup_logger(args.log_level)
-
-    os.makedirs(args.destination, exist_ok=True)
-    os.chdir(args.destination)
-
-    csv_path = download_csv('.', args.filename)
-    data = preprocess_data(csv_path, gender=args.gender, rows=args.rows)
-    grouped = group_users(data)
-    save_grouped_data(grouped, '.')
-
-    log_folder_structure(Path('.'))
-    archive_folder(os.path.abspath('.'), 'user_data')
-
-
-if __name__ == '__main__':
-    main()
