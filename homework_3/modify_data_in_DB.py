@@ -1,7 +1,8 @@
 import logging
 from db_connection_decorator import db_connection
-from consts import LOGGER_NAME
+from consts import LOGGER_NAME, ALLOWED_STATUSES, ALLOWED_TYPES
 from typing import Any
+from validate_data import validate_account_number, validate_fields
 
 
 @db_connection
@@ -83,6 +84,11 @@ def modify_account(account_id: int, variable: str, new_data: Any, cursor=None):
         allowed_fields = ['account_num', 'user_id', 'type', 'bank_id', 'currency', 'amount', 'status']
         if variable not in allowed_fields:
             raise ValueError('There is no such attribute in the table.')
+
+        if variable == 'account_num':
+            new_data = validate_account_number(new_data)
+        elif variable in ('status', 'type'):
+            validate_fields(variable, new_data, ALLOWED_STATUSES if variable == 'status' else ALLOWED_TYPES)
 
         cursor.execute(f'''UPDATE Account
                            SET {variable}=?
