@@ -1,14 +1,16 @@
 import logging
-from setup_logging import init_logger
-from consts import LOGGER_NAME
-from adding_data_to_DB import add_users, add_banks, add_accounts, add_data_from_csv
-from test_data import load_test_data_in_csv_users, load_test_data_in_csv_banks, load_test_data_in_csv_accounts
-from modify_data_in_DB import modify_user, modify_bank, modify_account
-from delete_data_in_DB import delete_user, delete_bank, delete_account
-from transfer_operations import send_money
-from database_services import (get_random_credit_discount, get_users_with_debts, get_bank_with_largest_capital,
-                               get_bank_serving_oldest_client, get_bank_with_most_outbound_users,
-                               delete_users_without_full_info, get_transactions_last_3_months)
+from homework_4.setup_logging import init_logger
+from homework_4.consts import LOGGER_NAME
+from homework_4.adding_data_to_DB import add_users, add_banks, add_accounts, add_data_from_csv
+from homework_4.test_data import (load_test_data_in_csv_users, load_test_data_in_csv_banks,
+                                  load_test_data_in_csv_accounts)
+from homework_4.modify_data_in_DB import modify_user, modify_bank, modify_account
+from homework_4.delete_data_in_DB import delete_user, delete_bank, delete_account
+from homework_4.transfer_operations import send_money
+from homework_4.database_services import (get_random_credit_discount, get_users_with_debts,
+                                          get_bank_with_largest_capital,
+                                          get_bank_serving_oldest_client, get_bank_with_most_outbound_users,
+                                          delete_users_without_full_info, get_transactions_last_3_months)
 
 
 def main():
@@ -35,7 +37,7 @@ def main():
         print(f'User ID: {user_id}. Discount given to him: {user_discount}.')
 
     answer_2 = get_users_with_debts()
-    print('Users with debts:')
+    print('Users with debts: ', end='')
     for item in answer_2:
         print(f'{item[0]} {item[1]}')
 

@@ -1,7 +1,9 @@
 import logging
-from db_connection_decorator import db_connection
-from consts import LOGGER_NAME
+from homework_4.db_connection_decorator import db_connection
+from homework_4.consts import (LOGGER_NAME, SQL_UPDATE_USER_FIELD, SQL_UPDATE_BANK_FIELD, SQL_UPDATE_ACCOUNT_FIELD,
+                               ALLOWED_STATUSES, ALLOWED_TYPES)
 from typing import Any
+from homework_4.validate_data import validate_account_number, validate_fields
 
 
 @db_connection
@@ -23,9 +25,8 @@ def modify_user(user_id: int, variable: str, new_data: Any, cursor=None):
         if variable not in allowed_fields:
             raise ValueError('There is no such attribute in the table.')
 
-        cursor.execute(f'''UPDATE User
-                           SET {variable}=?
-                           WHERE id=?''', (new_data, user_id))
+        query = SQL_UPDATE_USER_FIELD.format(variable)
+        cursor.execute(query, (new_data, user_id))
 
         logger.info(f'Successfully changed field {variable} in table User')
         return f'Successfully changed field {variable} in table User'
@@ -53,9 +54,8 @@ def modify_bank(bank_id: int, variable: str, new_data: Any, cursor=None):
         if variable not in allowed_fields:
             raise ValueError('There is no such attribute in the table.')
 
-        cursor.execute(f'''UPDATE Bank
-                           SET {variable}=?
-                           WHERE id=?''', (new_data, bank_id))
+        query = SQL_UPDATE_BANK_FIELD.format(variable)
+        cursor.execute(query, (new_data, bank_id))
 
         logger.info(f'Successfully changed field {variable} in table Bank')
         return f'Successfully changed field {variable} in table Bank'
@@ -84,9 +84,13 @@ def modify_account(account_id: int, variable: str, new_data: Any, cursor=None):
         if variable not in allowed_fields:
             raise ValueError('There is no such attribute in the table.')
 
-        cursor.execute(f'''UPDATE Account
-                           SET {variable}=?
-                           WHERE id=?''', (new_data, account_id))
+        if variable == 'account_num':
+            new_data = validate_account_number(new_data)
+        elif variable in ('status', 'type'):
+            validate_fields(variable, new_data, ALLOWED_STATUSES if variable == 'status' else ALLOWED_TYPES)
+
+        query = SQL_UPDATE_ACCOUNT_FIELD.format(variable)
+        cursor.execute(query, (new_data, account_id))
 
         logger.info(f'Successfully changed field {variable} in table Account')
         return f'Successfully changed field {variable} in table Account'

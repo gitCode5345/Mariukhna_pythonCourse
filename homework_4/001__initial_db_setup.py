@@ -3,7 +3,7 @@ import argparse
 
 
 def init_tables_db(args_param):
-    conn = sqlite3.connect('./homework_3/bank_data.db')
+    conn = sqlite3.connect('./homework_4/bank_data.db')
     cursor = conn.cursor()
 
     cursor.execute('PRAGMA foreign_keys = ON;')
@@ -20,7 +20,7 @@ def init_tables_db(args_param):
                         accounts TEXT
                         {', UNIQUE(name, surname)' if args_param == 1 else ''}
                         )''')
-    cursor.execute(f'''CREATE TABLE IF NOT EXISTS Account (
+    cursor.execute('''CREATE TABLE IF NOT EXISTS Account (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         user_id INT NOT NULL,
                         type TEXT NOT NULL CHECK(type IN ('credit', 'debit')),

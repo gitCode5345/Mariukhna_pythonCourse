@@ -1,8 +1,9 @@
 import logging
 import csv
-from db_connection_decorator import db_connection
-from consts import LOGGER_NAME, ALLOWED_STATUSES, ALLOWED_TYPES
-from validate_data import validate_user_name, validate_fields, validate_account_number
+from homework_4.db_connection_decorator import db_connection
+from homework_4.consts import (LOGGER_NAME, ALLOWED_STATUSES, ALLOWED_TYPES, SQL_INSERT_USER, SQL_INSERT_BANK,
+                               SQL_INSERT_ACCOUNT)
+from homework_4.validate_data import validate_user_name, validate_fields, validate_account_number
 
 
 @db_connection
@@ -27,8 +28,7 @@ def add_users(*args, cursor=None):
                 full_name = user['user_fullname']
                 birth_day = user['birth_day']
                 name, surname = validate_user_name(full_name)
-                cursor.execute('''INSERT INTO User(name, surname, birth_day) VALUES(?, ?, ?)''',
-                               (name, surname, birth_day))
+                cursor.execute(SQL_INSERT_USER, (name, surname, birth_day))
 
     try:
         process(args)
@@ -60,7 +60,7 @@ def add_banks(*args, cursor=None):
                 process(bank)
             else:
                 bank_name = bank['bank_name']
-                cursor.execute('''INSERT INTO Bank(name) VALUES(?)''', (bank_name,))
+                cursor.execute(SQL_INSERT_BANK, (bank_name,))
     try:
         process(args)
     except Exception as e:
@@ -102,9 +102,7 @@ def add_accounts(*args, cursor=None):
                         currency = account['currency']
                         amount = account['amount']
                         status = account['status']
-                        cursor.execute('''INSERT INTO Account(user_id, type, account_num, bank_id, currency, amount, 
-                                                              status)
-                                                              VALUES(?, ?, ?, ?, ?, ?, ?)''',
+                        cursor.execute(SQL_INSERT_ACCOUNT,
                                        (int(user_id), type_card, account_num,
                                         int(bank_id), currency,
                                         float(amount),
@@ -140,6 +138,7 @@ def add_data_from_csv(path: str, handler_func):
                 handler_func(data)
 
         logger.info('Data from CSV file successfully added')
+        return 'Data from CSV file successfully added'
     except FileNotFoundError as e:
         logger.error(e)
         return e

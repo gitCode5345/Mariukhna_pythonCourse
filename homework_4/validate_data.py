@@ -1,5 +1,5 @@
 import re
-from consts import SIZE_ACC_NUM
+from homework_4.consts import SIZE_ACC_NUM
 
 
 def validate_user_name(full_name: str):
@@ -13,7 +13,7 @@ def validate_user_name(full_name: str):
     """
     parts = re.findall(r'[A-Za-z\']+', full_name)
     if len(parts) < 2:
-        raise ValueError("Full name must contain at least a first name and a surname.")
+        raise ValueError('Full name must contain at least a first name and a surname.')
 
     name = parts[0]
     surname = " ".join(parts[1:])
