@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
-from homework_4.transfer_operations import send_money, convert_currency
-from homework_4.consts import SQL_UPDATE_ACCOUNT_AFTER_TRANSACTION, SQL_SELECT_ACCOUNT_INFO, SQL_INSERT_TRANSACTION
+from homework_5.transfer_operations import send_money, convert_currency
+from homework_5.consts import SQL_UPDATE_ACCOUNT_AFTER_TRANSACTION, SQL_SELECT_ACCOUNT_INFO, SQL_INSERT_TRANSACTION
 
 
 def test_send_money_success(mock_convert_currency, mock_db_cursor):

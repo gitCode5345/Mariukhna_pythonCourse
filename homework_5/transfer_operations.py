@@ -3,8 +3,8 @@ import os
 from datetime import datetime
 import requests
 from dotenv import load_dotenv
-from homework_4.db_connection_decorator import db_connection
-from homework_4.consts import (LOGGER_NAME, SQL_SELECT_ACCOUNT_INFO, SQL_UPDATE_ACCOUNT_AFTER_TRANSACTION,
+from homework_5.db_connection_decorator import db_connection
+from homework_5.consts import (LOGGER_NAME, SQL_SELECT_ACCOUNT_INFO, SQL_UPDATE_ACCOUNT_AFTER_TRANSACTION,
                                SQL_SELECT_BANK_NAME, SQL_INSERT_TRANSACTION)
 
 

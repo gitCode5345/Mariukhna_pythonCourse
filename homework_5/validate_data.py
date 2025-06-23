@@ -1,5 +1,5 @@
 import re
-from homework_4.consts import SIZE_ACC_NUM
+from homework_5.consts import SIZE_ACC_NUM
 
 
 def validate_user_name(full_name: str):

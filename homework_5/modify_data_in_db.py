@@ -1,9 +1,9 @@
 import logging
 from typing import Any
-from homework_4.db_connection_decorator import db_connection
-from homework_4.consts import (LOGGER_NAME, SQL_UPDATE_USER_FIELD, SQL_UPDATE_BANK_FIELD, SQL_UPDATE_ACCOUNT_FIELD,
+from homework_5.db_connection_decorator import db_connection
+from homework_5.consts import (LOGGER_NAME, SQL_UPDATE_USER_FIELD, SQL_UPDATE_BANK_FIELD, SQL_UPDATE_ACCOUNT_FIELD,
                                ALLOWED_STATUSES, ALLOWED_TYPES)
-from homework_4.validate_data import validate_account_number, validate_fields
+from homework_5.validate_data import validate_account_number, validate_fields
 
 
 @db_connection

@@ -1,0 +1,52 @@
+inherits:
+    - strictness_high
+
+
+ignore:
+  - venv
+  - tests
+  - .pytest_cache/
+
+
+output-format: grouped
+
+test-warnings: true
+doc-warnings: false
+
+autodetect: false
+
+uses:
+  - sqlite3
+  - logging
+  - random
+  - requests
+  - os
+  - re
+  - argparse
+  - csv
+
+pep8:
+    # style checking
+    run: true
+    options:
+        max-line-length: 120
+
+pylint:
+    # static analysis and then some
+    run: true
+    options:
+        max-line-length: 120
+        # pytest module has dynamically assigned functions,
+        # raising errors such as: E1101: Module 'pytest' has
+        # no 'mark' member
+        ignored-classes: pytest
+        max-locals: 20
+    disable:
+        - C0302
+        - W0142
+        - W0141
+        - С0114
+        - broad-exception-caught
+
+
+# prospector --profile .prospector.yaml

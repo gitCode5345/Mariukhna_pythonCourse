@@ -3,7 +3,7 @@ import argparse
 
 
 def init_tables_db(args_param):
-    conn = sqlite3.connect('./homework_4/bank_data.db')
+    conn = sqlite3.connect('./homework_5/bank_data.db')
     cursor = conn.cursor()
 
     cursor.execute('PRAGMA foreign_keys = ON;')

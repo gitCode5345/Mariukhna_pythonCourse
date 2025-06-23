@@ -1,9 +1,9 @@
-from homework_4.database_services import (get_random_credit_discount, get_users_with_debts,
+from homework_5.database_services import (get_random_credit_discount, get_users_with_debts,
                                           get_bank_with_most_outbound_users, get_bank_with_largest_capital,
                                           get_transactions_last_3_months, get_bank_serving_oldest_client,
                                           delete_users_without_full_info)
 from unittest.mock import MagicMock
-from homework_4.consts import SQL_DELETE_USERS_WITHOUT_FULL_INFO
+from homework_5.consts import SQL_DELETE_USERS_WITHOUT_FULL_INFO
 
 
 def test_get_random_credit_discount(mock_rand_choice, mock_rand_int, mock_db_cursor, all_users_ids):

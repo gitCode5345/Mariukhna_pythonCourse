@@ -1,7 +1,7 @@
 import logging
 import random
-from homework_4.db_connection_decorator import db_connection
-from homework_4.consts import (DISCOUNTS, LOGGER_NAME, SQL_SELECT_RANDOM_ID_USER_WITH_LIMIT,
+from homework_5.db_connection_decorator import db_connection
+from homework_5.consts import (DISCOUNTS, LOGGER_NAME, SQL_SELECT_RANDOM_ID_USER_WITH_LIMIT,
                                SQL_SELECT_USERS_WITH_DEBTS, SQL_SELECT_BANK_WITH_LARGEST_CAPITAL,
                                SQL_SELECT_BANK_SERVING_OLDEST_CLIENT, SQL_SELECT_BANK_WITH_MOST_OUTBOUND_USERS,
                                SQL_DELETE_USERS_WITHOUT_FULL_INFO, SQL_SELECT_TRANSACTIONS_LAST_3_MONTHS)

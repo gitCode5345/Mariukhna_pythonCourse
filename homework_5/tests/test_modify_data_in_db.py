@@ -1,5 +1,5 @@
-from homework_4.modify_data_in_db import modify_user, modify_bank, modify_account
-from homework_4.consts import SQL_UPDATE_USER_FIELD, SQL_UPDATE_BANK_FIELD, SQL_UPDATE_ACCOUNT_FIELD
+from homework_5.modify_data_in_db import modify_user, modify_bank, modify_account
+from homework_5.consts import SQL_UPDATE_USER_FIELD, SQL_UPDATE_BANK_FIELD, SQL_UPDATE_ACCOUNT_FIELD
 from unittest.mock import patch
 
 

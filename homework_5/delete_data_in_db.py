@@ -1,6 +1,6 @@
 import logging
-from homework_4.consts import LOGGER_NAME
-from homework_4.db_connection_decorator import db_connection
+from homework_5.consts import LOGGER_NAME
+from homework_5.db_connection_decorator import db_connection
 
 
 @db_connection

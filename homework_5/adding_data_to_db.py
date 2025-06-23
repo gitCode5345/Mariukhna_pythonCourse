@@ -1,9 +1,9 @@
 import logging
 import csv
-from homework_4.db_connection_decorator import db_connection
-from homework_4.consts import (LOGGER_NAME, ALLOWED_STATUSES, ALLOWED_TYPES, SQL_INSERT_USER, SQL_INSERT_BANK,
+from homework_5.db_connection_decorator import db_connection
+from homework_5.consts import (LOGGER_NAME, ALLOWED_STATUSES, ALLOWED_TYPES, SQL_INSERT_USER, SQL_INSERT_BANK,
                                SQL_INSERT_ACCOUNT)
-from homework_4.validate_data import validate_user_name, validate_fields, validate_account_number
+from homework_5.validate_data import validate_user_name, validate_fields, validate_account_number
 
 
 @db_connection

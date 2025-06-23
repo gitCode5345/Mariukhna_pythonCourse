@@ -3,7 +3,7 @@ import os
 import tempfile
 import sqlite3
 from unittest.mock import MagicMock, patch
-from homework_4.consts import (SQL_CREATE_TABLE_USER_FOR_TEST, SQL_CREATE_TABLE_BANK_FOR_TEST,
+from homework_5.consts import (SQL_CREATE_TABLE_USER_FOR_TEST, SQL_CREATE_TABLE_BANK_FOR_TEST,
                                SQL_CREATE_TABLE_ACCOUNT_FOR_TEST, SQL_CREATE_TABLE_TRANSACTIONS_FOR_TEST)
 
 
@@ -64,7 +64,7 @@ def valid_account_types():
 
 @pytest.fixture
 def mock_convert_currency():
-    with patch('homework_4.transfer_operations.convert_currency', return_value=100.0) as patched:
+    with patch('homework_5.transfer_operations.convert_currency', return_value=100.0) as patched:
         yield patched
 
 
@@ -92,13 +92,13 @@ def mock_rand_choice():
 
 @pytest.fixture
 def mock_load_dotenv():
-    with patch('homework_4.transfer_operations.load_dotenv') as patched:
+    with patch('homework_5.transfer_operations.load_dotenv') as patched:
         yield patched
 
 
 @pytest.fixture
 def mock_os_getenv():
-    with patch('homework_4.transfer_operations.os.getenv') as patched:
+    with patch('homework_5.transfer_operations.os.getenv') as patched:
         yield patched
 
 
@@ -107,7 +107,7 @@ def mock_request_get():
     build_request = MagicMock()
     build_request.status_code = 200
 
-    with patch('homework_4.transfer_operations.requests.get', return_value=build_request):
+    with patch('homework_5.transfer_operations.requests.get', return_value=build_request):
         yield build_request
 
 
@@ -186,25 +186,25 @@ def temp_test_db():
 
 @pytest.fixture
 def mock_validate_fields_on_add_account():
-    with patch('homework_4.adding_data_to_db.validate_fields')as patched:
+    with patch('homework_5.adding_data_to_db.validate_fields')as patched:
         yield patched
 
 
 @pytest.fixture
 def mock_validate_fields_on_update_account():
-    with patch('homework_4.modify_data_in_db.validate_fields') as patched:
+    with patch('homework_5.modify_data_in_db.validate_fields') as patched:
         yield patched
 
 
 @pytest.fixture
 def mock_validate_account_number_on_add_account():
-    with (patch('homework_4.adding_data_to_db.validate_account_number', return_value='ID--a-b-q-123456-u')
+    with (patch('homework_5.adding_data_to_db.validate_account_number', return_value='ID--a-b-q-123456-u')
           as patched):
         yield patched
 
 
 @pytest.fixture
 def mock_validate_account_number_on_update_account():
-    with (patch('homework_4.modify_data_in_db.validate_account_number', return_value='ID--jh-p-001273-xz')
+    with (patch('homework_5.modify_data_in_db.validate_account_number', return_value='ID--jh-p-001273-xz')
           as patched):
         yield patched
