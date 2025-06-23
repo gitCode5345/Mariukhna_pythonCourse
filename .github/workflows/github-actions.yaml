@@ -28,7 +28,7 @@ jobs:
       - name: Lint code with Prospector
         working-directory: homework_5
         run: |
-          prospector
+          prospector . --profile .prospector.yaml
 
       - name: Run Pytest
         working-directory: homework_5
