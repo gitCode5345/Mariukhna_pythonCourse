@@ -186,25 +186,25 @@ def temp_test_db():
 
 @pytest.fixture
 def mock_validate_fields_on_add_account():
-    with patch('homework_4.adding_data_to_DB.validate_fields')as patched:
+    with patch('homework_4.adding_data_to_db.validate_fields')as patched:
         yield patched
 
 
 @pytest.fixture
 def mock_validate_fields_on_update_account():
-    with patch('homework_4.modify_data_in_DB.validate_fields') as patched:
+    with patch('homework_4.modify_data_in_db.validate_fields') as patched:
         yield patched
 
 
 @pytest.fixture
 def mock_validate_account_number_on_add_account():
-    with (patch('homework_4.adding_data_to_DB.validate_account_number', return_value='ID--a-b-q-123456-u')
+    with (patch('homework_4.adding_data_to_db.validate_account_number', return_value='ID--a-b-q-123456-u')
           as patched):
         yield patched
 
 
 @pytest.fixture
 def mock_validate_account_number_on_update_account():
-    with (patch('homework_4.modify_data_in_DB.validate_account_number', return_value='ID--jh-p-001273-xz')
+    with (patch('homework_4.modify_data_in_db.validate_account_number', return_value='ID--jh-p-001273-xz')
           as patched):
         yield patched

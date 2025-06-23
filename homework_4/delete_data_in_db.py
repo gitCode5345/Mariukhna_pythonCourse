@@ -17,7 +17,7 @@ def delete_user(user_id: int, cursor=None):
     logger = logging.getLogger(LOGGER_NAME)
     try:
         cursor.execute('DELETE FROM User WHERE id = ?', (user_id,))
-        logger.info(f'Successfully deleted user with id {user_id}')
+        logger.info('Successfully deleted user with id %s', user_id)
         return f'Successfully deleted user with id {user_id}'
     except Exception as e:
         logger.error(e)
@@ -38,7 +38,7 @@ def delete_bank(bank_id: int, cursor=None):
     logger = logging.getLogger(LOGGER_NAME)
     try:
         cursor.execute('DELETE FROM Bank WHERE id = ?', (bank_id,))
-        logger.info(f'Successfully deleted bank with id {bank_id}')
+        logger.info('Successfully deleted bank with id %s', bank_id)
         return f'Successfully deleted bank with id {bank_id}'
     except Exception as e:
         logger.error(e)
@@ -59,7 +59,7 @@ def delete_account(account_id: int, cursor=None):
     logger = logging.getLogger(LOGGER_NAME)
     try:
         cursor.execute('DELETE FROM Account WHERE id = ?', (account_id,))
-        logger.info(f'Successfully deleted account with id {account_id}')
+        logger.info('Successfully deleted account with id %s', account_id)
         return f'Successfully deleted account with id {account_id}'
     except Exception as e:
         logger.error(e)

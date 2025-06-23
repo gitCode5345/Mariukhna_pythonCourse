@@ -23,4 +23,3 @@ def init_logger(logger_name: str):
 
     logger.addHandler(log_file_handler)
     logger.addHandler(log_stream_handler)
-

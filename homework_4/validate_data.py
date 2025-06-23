@@ -47,8 +47,8 @@ def validate_account_number(acc_num: str):
     """
     if not len(acc_num) == SIZE_ACC_NUM:
         raise ValueError(f'Incorrect account number length should be {SIZE_ACC_NUM}')
-    elif not acc_num.startswith('ID--'):
-        raise ValueError(f'Invalid format. Account number must start with ID--')
+    if not acc_num.startswith('ID--'):
+        raise ValueError('Invalid format. Account number must start with ID--')
 
     clean_acc_num = re.sub(r'[#%_?&]', '-', acc_num)
     search_pattern = r'[a-zA-Z]{1,3}-\d+-'

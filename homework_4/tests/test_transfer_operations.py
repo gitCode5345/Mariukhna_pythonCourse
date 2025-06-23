@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 from homework_4.transfer_operations import send_money, convert_currency
 from homework_4.consts import SQL_UPDATE_ACCOUNT_AFTER_TRANSACTION, SQL_SELECT_ACCOUNT_INFO, SQL_INSERT_TRANSACTION
 

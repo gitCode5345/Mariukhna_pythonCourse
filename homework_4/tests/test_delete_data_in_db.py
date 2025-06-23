@@ -1,4 +1,4 @@
-from homework_4.delete_data_in_DB import delete_user, delete_bank, delete_account
+from homework_4.delete_data_in_db import delete_user, delete_bank, delete_account
 from homework_4.consts import SQL_DELETE_USER, SQL_DELETE_BANK, SQL_DELETE_ACCOUNT
 
 

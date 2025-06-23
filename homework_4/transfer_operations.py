@@ -1,11 +1,11 @@
 import logging
-import requests
 import os
+from datetime import datetime
+import requests
+from dotenv import load_dotenv
 from homework_4.db_connection_decorator import db_connection
 from homework_4.consts import (LOGGER_NAME, SQL_SELECT_ACCOUNT_INFO, SQL_UPDATE_ACCOUNT_AFTER_TRANSACTION,
                                SQL_SELECT_BANK_NAME, SQL_INSERT_TRANSACTION)
-from dotenv import load_dotenv
-from datetime import datetime
 
 
 @db_connection
@@ -63,7 +63,8 @@ def send_money(sender_account_id: int, receiver_account_id: int, amount: float, 
                         int(receiver_account_id), sender_currency, int(before_amount)
                         if receiver_currency != sender_currency else int(amount), transaction_date))
 
-        logger.info(f'Transaction from ID {sender_account_id} to ID {receiver_account_id} completed successfully.')
+        logger.info('Transaction from ID %s to ID %s completed successfully.',
+                    sender_account_id, receiver_account_id)
         return f'Transaction from ID {sender_account_id} to ID {receiver_account_id} completed successfully.'
     except Exception as e:
         logger.error(e)
@@ -85,7 +86,7 @@ def convert_currency(from_currency: str, to_currency: str, amount: float):
     key = os.getenv('API_KEY')
     logger = logging.getLogger(LOGGER_NAME)
 
-    response = requests.get(f'https://api.freecurrencyapi.com/v1/latest?apikey={key}')
+    response = requests.get(f'https://api.freecurrencyapi.com/v1/latest?apikey={key}', timeout=60)
     if response.status_code == 200:
         logger.info('Fetching data from the API to retrieve exchange rates.')
 
@@ -94,8 +95,7 @@ def convert_currency(from_currency: str, to_currency: str, amount: float):
         value_to_currency = data[to_currency]
 
         return amount * (value_to_currency / value_from_currency)
-    elif response.status_code == 429:
+    if response.status_code == 429:
         raise ValueError('Request limit reached.')
-    else:
-        raise ValueError('An error occurred while retrieving currency rates.')
 
+    raise ValueError('An error occurred while retrieving currency rates.')

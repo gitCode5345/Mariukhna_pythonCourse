@@ -150,7 +150,7 @@ def get_transactions_last_3_months(user_id: int, cursor=None):
     :return: --> list of transactions (rows) or empty list if none found
     """
     logger = logging.getLogger(LOGGER_NAME)
-    logger.info(f'Getting user transactions with id {user_id} for the last 3 months')
+    logger.info('Getting user transactions with id %s for the last 3 months', user_id)
 
     try:
         query = SQL_SELECT_TRANSACTIONS_LAST_3_MONTHS.format(user_id, user_id)

@@ -7,7 +7,7 @@ def load_test_data_in_csv_users(path: str):
             {'user_fullname': 'John Tested', 'birth_day': '2010-11-5'},
             {'user_fullname': 'Client Oldest', 'birth_day': '1995-11-10'},
             {'user_fullname': 'New Test', 'birth_day': None}]
-    with open(path, mode='w') as file:
+    with open(path, mode='w', encoding='utf-8') as file:
         csv_writer = csv.DictWriter(file, fieldnames=fieldnames)
         csv_writer.writeheader()
         csv_writer.writerows(data)
@@ -17,7 +17,7 @@ def load_test_data_in_csv_banks(path: str):
     fieldnames = ['bank_name']
     data = [{'bank_name': 'Privat'},
             {'bank_name': 'Mono'}]
-    with open(path, mode='w') as file:
+    with open(path, mode='w', encoding='utf-8') as file:
         csv_writer = csv.DictWriter(file, fieldnames=fieldnames)
         csv_writer.writeheader()
         csv_writer.writerows(data)
@@ -72,7 +72,7 @@ def load_test_data_in_csv_accounts(path: str):
             'type': 'debit'
         }
     ]
-    with open(path, mode='w') as file:
+    with open(path, mode='w', encoding='utf-8') as file:
         csv_writer = csv.DictWriter(file, fieldnames=fieldnames)
         csv_writer.writeheader()
         csv_writer.writerows(data)

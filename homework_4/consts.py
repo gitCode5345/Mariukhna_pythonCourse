@@ -84,13 +84,13 @@ SQL_CREATE_TABLE_BANK_FOR_TEST = '''CREATE TABLE IF NOT EXISTS Bank (
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                                     name TEXT NOT NULL UNIQUE
                                     )'''
-SQL_CREATE_TABLE_USER_FOR_TEST = f'''CREATE TABLE IF NOT EXISTS User (
-                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                     name TEXT NOT NULL,
-                                     surname TEXT NOT NULL,
-                                     birth_day TEXT,
-                                     accounts TEXT
-                                     )'''
+SQL_CREATE_TABLE_USER_FOR_TEST = '''CREATE TABLE IF NOT EXISTS User (
+                                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                    name TEXT NOT NULL,
+                                    surname TEXT NOT NULL,
+                                    birth_day TEXT,
+                                    accounts TEXT
+                                    )'''
 SQL_CREATE_TABLE_ACCOUNT_FOR_TEST = '''CREATE TABLE IF NOT EXISTS Account (
                                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                                        user_id INT NOT NULL,

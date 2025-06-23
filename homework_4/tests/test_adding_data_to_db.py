@@ -1,4 +1,4 @@
-from homework_4.adding_data_to_DB import add_users, add_banks, add_accounts, add_data_from_csv
+from homework_4.adding_data_to_db import add_users, add_banks, add_accounts, add_data_from_csv
 from homework_4.consts import SQL_INSERT_USER, SQL_INSERT_BANK, SQL_INSERT_ACCOUNT
 from unittest.mock import MagicMock
 

@@ -78,7 +78,7 @@ def add_accounts(*args, cursor=None):
     connect with db, validate and transform account data into SQL INSERT commands and execute them
 
     :param args: list of account dictionaries or nested lists of dictionaries.
-                 each dictionary must contain 'user_id', 'type', 'account_num', 'bank_id', 'currency', 'amount', 'status'
+    each dictionary must contain 'user_id', 'type', 'account_num', 'bank_id', 'currency', 'amount', 'status'
     :param cursor: db connection cursor (auto-injected by @db_connection)
 
     :return: --> str (success message) or False (if error occurs)
@@ -115,8 +115,8 @@ def add_accounts(*args, cursor=None):
             return False
 
     if process(args):
-        logger.info(f'Successfully added account(s)')
-        return f'Successfully added account(s)'
+        logger.info('Successfully added account(s)')
+        return 'Successfully added account(s)'
 
 
 def add_data_from_csv(path: str, handler_func):

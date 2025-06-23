@@ -1,8 +1,8 @@
 import logging
+from typing import Any
 from homework_4.db_connection_decorator import db_connection
 from homework_4.consts import (LOGGER_NAME, SQL_UPDATE_USER_FIELD, SQL_UPDATE_BANK_FIELD, SQL_UPDATE_ACCOUNT_FIELD,
                                ALLOWED_STATUSES, ALLOWED_TYPES)
-from typing import Any
 from homework_4.validate_data import validate_account_number, validate_fields
 
 
@@ -28,7 +28,7 @@ def modify_user(user_id: int, variable: str, new_data: Any, cursor=None):
         query = SQL_UPDATE_USER_FIELD.format(variable)
         cursor.execute(query, (new_data, user_id))
 
-        logger.info(f'Successfully changed field {variable} in table User')
+        logger.info('Successfully changed field %s in table User', variable)
         return f'Successfully changed field {variable} in table User'
     except Exception as e:
         logger.error(e)
@@ -57,7 +57,7 @@ def modify_bank(bank_id: int, variable: str, new_data: Any, cursor=None):
         query = SQL_UPDATE_BANK_FIELD.format(variable)
         cursor.execute(query, (new_data, bank_id))
 
-        logger.info(f'Successfully changed field {variable} in table Bank')
+        logger.info('Successfully changed field %s in table Bank', variable)
         return f'Successfully changed field {variable} in table Bank'
     except Exception as e:
         logger.error(e)
@@ -92,7 +92,7 @@ def modify_account(account_id: int, variable: str, new_data: Any, cursor=None):
         query = SQL_UPDATE_ACCOUNT_FIELD.format(variable)
         cursor.execute(query, (new_data, account_id))
 
-        logger.info(f'Successfully changed field {variable} in table Account')
+        logger.info('Successfully changed field %s in table Account', variable)
         return f'Successfully changed field {variable} in table Account'
     except Exception as e:
         logger.error(e)
