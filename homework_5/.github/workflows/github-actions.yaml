@@ -2,8 +2,10 @@ name: lab_6_CI/CD
 run-name: lab_6_done
 
 on:
-  workflow_dispatch:
   push:
+    paths:
+      - 'homework_5/**'
+  workflow_dispatch:
 
 jobs:
   Custom_pipeline:
@@ -17,15 +19,18 @@ jobs:
           python-version: "3.12.8"
 
       - name: Install dependencies
+        working-directory: homework_5
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install prospector[with_everything] pytest
 
-      - name: linter
+      - name: Lint code with Prospector
+        working-directory: homework_5
         run: |
-          prospector --profile .prospector.yaml
+          prospector . --profile .prospector.yaml
 
-      - name: unit-tests
+      - name: Run Pytest
+        working-directory: homework_5
         run: |
           pytest
