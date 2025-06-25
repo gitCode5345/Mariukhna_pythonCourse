@@ -26,6 +26,9 @@ def send_money(sender_account_id: int, receiver_account_id: int, amount: float, 
     """
     logger = logging.getLogger(LOGGER_NAME)
     try:
+        if amount <= 0:
+            raise ValueError('Invalid value for funds transfer')
+
         sender_response = cursor.execute(SQL_SELECT_ACCOUNT_INFO, (sender_account_id,)).fetchone()
 
         sender_amount = sender_response[0]

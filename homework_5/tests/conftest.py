@@ -186,7 +186,7 @@ def temp_test_db():
 
 @pytest.fixture
 def mock_validate_fields_on_add_account():
-    with patch('homework_5.adding_data_to_db.validate_fields')as patched:
+    with patch('homework_5.adding_data_to_db.validate_fields') as patched:
         yield patched
 
 

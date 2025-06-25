@@ -1,5 +1,6 @@
 import logging
 import csv
+import sqlite3
 from homework_5.db_connection_decorator import db_connection
 from homework_5.consts import (LOGGER_NAME, ALLOWED_STATUSES, ALLOWED_TYPES, SQL_INSERT_USER, SQL_INSERT_BANK,
                                SQL_INSERT_ACCOUNT)
@@ -25,11 +26,13 @@ def add_users(*args, cursor=None):
             if isinstance(user, list):
                 process(user)
             else:
-                full_name = user['user_fullname']
-                birth_day = user['birth_day']
-                name, surname = validate_user_name(full_name)
-                cursor.execute(SQL_INSERT_USER, (name, surname, birth_day))
-
+                try:
+                    full_name = user['user_fullname']
+                    birth_day = user['birth_day']
+                    name, surname = validate_user_name(full_name)
+                    cursor.execute(SQL_INSERT_USER, (name, surname, birth_day))
+                except (KeyError, ValueError, sqlite3.OperationalError) as warn:
+                    logger.warning(warn)
     try:
         process(args)
     except Exception as e:
@@ -59,8 +62,11 @@ def add_banks(*args, cursor=None):
             if isinstance(bank, list):
                 process(bank)
             else:
-                bank_name = bank['bank_name']
-                cursor.execute(SQL_INSERT_BANK, (bank_name,))
+                try:
+                    bank_name = bank['bank_name']
+                    cursor.execute(SQL_INSERT_BANK, (bank_name,))
+                except (KeyError, ValueError, sqlite3.OperationalError) as warn:
+                    logger.warning(warn)
     try:
         process(args)
     except Exception as e:
@@ -81,42 +87,41 @@ def add_accounts(*args, cursor=None):
     each dictionary must contain 'user_id', 'type', 'account_num', 'bank_id', 'currency', 'amount', 'status'
     :param cursor: db connection cursor (auto-injected by @db_connection)
 
-    :return: --> str (success message) or False (if error occurs)
+    :return: --> str (success message) or Exception (if error occurs)
     """
     logger = logging.getLogger(LOGGER_NAME)
 
     def process(data):
-        try:
-            for account in data:
-                if isinstance(account, list):
-                    process(account)
-                else:
-                    try:
-                        validate_fields('status', account['status'], ALLOWED_STATUSES)
-                        validate_fields('type', account['type'], ALLOWED_TYPES)
+        for account in data:
+            if isinstance(account, list):
+                process(account)
+            else:
+                try:
+                    validate_fields('status', account['status'], ALLOWED_STATUSES)
+                    validate_fields('type', account['type'], ALLOWED_TYPES)
 
-                        account_num = validate_account_number(account['account_num'])
-                        user_id = account['user_id']
-                        type_card = account['type']
-                        bank_id = account['bank_id']
-                        currency = account['currency']
-                        amount = account['amount']
-                        status = account['status']
-                        cursor.execute(SQL_INSERT_ACCOUNT,
-                                       (int(user_id), type_card, account_num,
-                                        int(bank_id), currency,
-                                        float(amount),
-                                        status))
-                    except ValueError as e:
-                        logger.warning(e)
-            return True
-        except Exception as e:
-            logger.error(e)
-            return False
+                    account_num = validate_account_number(account['account_num'])
+                    user_id = account['user_id']
+                    type_card = account['type']
+                    bank_id = account['bank_id']
+                    currency = account['currency']
+                    amount = account['amount']
+                    status = account['status']
+                    cursor.execute(SQL_INSERT_ACCOUNT,
+                                   (int(user_id), type_card, account_num,
+                                    int(bank_id), currency,
+                                    float(amount),
+                                    status))
+                except (KeyError, ValueError, sqlite3.OperationalError) as warn:
+                    logger.warning(warn)
+    try:
+        process(args)
+    except Exception as e:
+        logger.error(e)
+        return e
 
-    if process(args):
-        logger.info('Successfully added account(s)')
-        return 'Successfully added account(s)'
+    logger.info('Successfully added account(s)')
+    return 'Successfully added account(s)'
 
 
 def add_data_from_csv(path: str, handler_func):

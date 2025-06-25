@@ -9,10 +9,7 @@ ignore:
 
 
 output-format: grouped
-
-test-warnings: true
 doc-warnings: false
-
 autodetect: false
 
 uses:
@@ -42,10 +39,10 @@ pylint:
         ignored-classes: pytest
         max-locals: 20
     disable:
-        - C0302
-        - W0142
-        - W0141
-        - С0114
+        - C0302 # too-many-lines
+        - W0142 # used-builtin-function
+        - W0141 # used-builtin-function
+        - С0114 # missing-module-docstring
         - broad-exception-caught
 
 

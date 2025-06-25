@@ -2,6 +2,9 @@ LOGGER_NAME = 'LAB_4_LOGGER'
 
 ALLOWED_STATUSES = ['gold', 'silver', 'platinum']
 ALLOWED_TYPES = ['credit', 'debit']
+ALLOWED_FIELDS_FOR_MODIFY_USER = ['name', 'surname', 'birth_day', 'accounts']
+ALLOWED_FIELDS_FOR_MODIFY_BANK = ['name']
+ALLOWED_FIELDS_FOR_MODIFY_ACCOUNT = ['account_num', 'user_id', 'type', 'bank_id', 'currency', 'amount', 'status']
 
 SIZE_ACC_NUM = 18
 

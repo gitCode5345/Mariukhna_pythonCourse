@@ -2,7 +2,8 @@ import logging
 from typing import Any
 from homework_5.db_connection_decorator import db_connection
 from homework_5.consts import (LOGGER_NAME, SQL_UPDATE_USER_FIELD, SQL_UPDATE_BANK_FIELD, SQL_UPDATE_ACCOUNT_FIELD,
-                               ALLOWED_STATUSES, ALLOWED_TYPES)
+                               ALLOWED_STATUSES, ALLOWED_TYPES, ALLOWED_FIELDS_FOR_MODIFY_USER,
+                               ALLOWED_FIELDS_FOR_MODIFY_BANK, ALLOWED_FIELDS_FOR_MODIFY_ACCOUNT)
 from homework_5.validate_data import validate_account_number, validate_fields
 
 
@@ -21,8 +22,7 @@ def modify_user(user_id: int, variable: str, new_data: Any, cursor=None):
     """
     logger = logging.getLogger(LOGGER_NAME)
     try:
-        allowed_fields = ['name', 'surname', 'birth_day', 'accounts']
-        if variable not in allowed_fields:
+        if variable not in ALLOWED_FIELDS_FOR_MODIFY_USER:
             raise ValueError('There is no such attribute in the table.')
 
         query = SQL_UPDATE_USER_FIELD.format(variable)
@@ -50,8 +50,7 @@ def modify_bank(bank_id: int, variable: str, new_data: Any, cursor=None):
     """
     logger = logging.getLogger(LOGGER_NAME)
     try:
-        allowed_fields = ['name']
-        if variable not in allowed_fields:
+        if variable not in ALLOWED_FIELDS_FOR_MODIFY_BANK:
             raise ValueError('There is no such attribute in the table.')
 
         query = SQL_UPDATE_BANK_FIELD.format(variable)
@@ -80,8 +79,7 @@ def modify_account(account_id: int, variable: str, new_data: Any, cursor=None):
     """
     logger = logging.getLogger(LOGGER_NAME)
     try:
-        allowed_fields = ['account_num', 'user_id', 'type', 'bank_id', 'currency', 'amount', 'status']
-        if variable not in allowed_fields:
+        if variable not in ALLOWED_FIELDS_FOR_MODIFY_ACCOUNT:
             raise ValueError('There is no such attribute in the table.')
 
         if variable == 'account_num':
